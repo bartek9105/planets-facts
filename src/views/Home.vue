@@ -1,12 +1,16 @@
 <template>
-  <h1>Home</h1>
+  <AppButton btnNumber="01" btnText="Button" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import AppButton from '@/components/AppButton.vue';
 
 export default defineComponent({
   name: 'Home',
+  components: {
+    AppButton,
+  },
 });
 </script>
 
