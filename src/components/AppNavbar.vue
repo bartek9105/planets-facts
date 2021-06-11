@@ -1,47 +1,59 @@
 <template>
   <nav class="navbar">
     <AppLogo class="navbar__logo" />
-    <img src="@/assets/icon-hamburger.svg" alt="Menu icon" class="navbar__menu-icon" />
+    <img
+      src="@/assets/icon-hamburger.svg"
+      alt="Menu icon"
+      class="navbar__menu-icon"
+      @click="showMobileNav = !showMobileNav"
+    />
     <ul class="navbar__list">
       <li v-for="(planet, index) in planets" :key="index" class="navbar__list-item">
-        <router-link :to="planet" class="navbar__list-item-link">{{ planet }}</router-link>
+        <router-link :to="planet.name" class="navbar__list-item-link">{{
+          planet.name
+        }}</router-link>
       </li>
     </ul>
+    <AppMobileNavbar class="navbar__mobile" :planets="planets" v-if="showMobileNav" />
   </nav>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
+import AppMobileNavbar from '@/components/AppMobileNavbar.vue';
 
 export default defineComponent({
   name: 'AppNavbar',
   components: {
     AppLogo,
+    AppMobileNavbar,
   },
   setup() {
-    const planets = ref<string[]>([
-      'mercury',
-      'venus',
-      'earth',
-      'mars',
-      'jupiter',
-      'saturn',
-      'uranus',
-      'neptune',
+    const planets = reactive([
+      { name: 'merkury', color: '#DEF4FC' },
+      { name: 'venus', color: '#F7CC7F' },
+      { name: 'earth', color: '#545BFE' },
+      { name: 'mars', color: '#FF6A45' },
+      { name: 'jupiter', color: '#ECAD7A' },
+      { name: 'saturn', color: '#FCCB6B' },
+      { name: 'uranus', color: '#65F0D5' },
+      { name: 'neptune', color: '#497EFA' },
     ]);
+    const showMobileNav = ref<boolean>(false);
 
-    return { planets };
+    return { planets, showMobileNav };
   },
 });
 </script>
 
 <style lang="scss" scoped>
 .navbar {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
+  padding: 1.5rem;
   border-bottom: 1px solid #393950;
   &__list {
     font-family: 'Spartan';
@@ -64,6 +76,11 @@ export default defineComponent({
     &:hover {
       color: $white;
     }
+  }
+  &__mobile {
+    position: absolute;
+    top: 3.75rem;
+    left: 0;
   }
 }
 
