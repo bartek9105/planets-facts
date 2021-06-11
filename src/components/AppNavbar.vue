@@ -3,15 +3,24 @@
     <AppLogo class="navbar__logo" />
     <img
       src="@/assets/icon-hamburger.svg"
-      alt="Menu icon"
+      alt="Menu"
       class="navbar__menu-icon"
       @click="showMobileNav = !showMobileNav"
     />
     <ul class="navbar__list">
-      <li v-for="(planet, index) in planets" :key="index" class="navbar__list-item">
-        <router-link :to="planet.name" class="navbar__list-item-link">{{
-          planet.name
-        }}</router-link>
+      <li
+        v-for="(planet, index) in planets"
+        :key="index"
+        class="navbar__list-item"
+        @mouseover="(linkHover = true), (hoveredIndex = index)"
+        @mouseleave="linkHover = false"
+        :style="[
+          linkHover && hoveredIndex === index ? { borderTopColor: `${planet.color}` } : null,
+        ]"
+      >
+        <router-link :to="planet.name" class="navbar__list-item-link">
+          {{ planet.name }}
+        </router-link>
       </li>
     </ul>
     <AppMobileNavbar class="navbar__mobile" :planets="planets" v-if="showMobileNav" />
@@ -41,8 +50,15 @@ export default defineComponent({
       { name: 'neptune', color: '#497EFA' },
     ]);
     const showMobileNav = ref<boolean>(false);
+    const linkHover = ref<boolean>(false);
+    const hoveredIndex = ref<number>();
 
-    return { planets, showMobileNav };
+    return {
+      planets,
+      showMobileNav,
+      linkHover,
+      hoveredIndex,
+    };
   },
 });
 </script>
@@ -67,6 +83,11 @@ export default defineComponent({
     text-transform: uppercase;
   }
   &__list-item {
+    display: flex;
+    align-items: center;
+    &:hover {
+      border-top: 1px solid planetColor;
+    }
     &:not(:last-of-type) {
       margin-right: 2rem;
     }
@@ -76,6 +97,9 @@ export default defineComponent({
     &:hover {
       color: $white;
     }
+  }
+  &__menu-icon {
+    cursor: pointer;
   }
   &__mobile {
     position: absolute;
@@ -87,9 +111,9 @@ export default defineComponent({
 @media (min-width: 768px) {
   .navbar {
     flex-direction: column;
-    padding: 2.5rem 3.125rem;
+    padding: 2rem 3.125rem 0 3.125rem;
     &__logo {
-      margin-bottom: 3.125rem;
+      margin-bottom: 0.625rem;
     }
     &__menu-icon {
       display: none;
@@ -97,13 +121,19 @@ export default defineComponent({
     &__list {
       display: flex;
     }
+    &__list-item {
+      border-top: 4px solid transparent;
+    }
+    &__list-item-link {
+      padding: 2.25rem 0;
+    }
   }
 }
 
 @media (min-width: 1440px) {
   .navbar {
     flex-direction: row;
-    padding: 1.875rem 2rem;
+    padding: 0 2rem;
     &__logo {
       margin-bottom: 0;
     }
