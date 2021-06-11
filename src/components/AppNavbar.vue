@@ -85,9 +85,6 @@ export default defineComponent({
   &__list-item {
     display: flex;
     align-items: center;
-    &:hover {
-      border-top: 1px solid planetColor;
-    }
     &:not(:last-of-type) {
       margin-right: 2rem;
     }
