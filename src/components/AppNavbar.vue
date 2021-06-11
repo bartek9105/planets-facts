@@ -103,7 +103,7 @@ export default defineComponent({
   }
   &__mobile {
     position: absolute;
-    top: 3.75rem;
+    top: 6.3125rem;
     left: 0;
   }
 }

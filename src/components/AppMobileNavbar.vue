@@ -42,10 +42,12 @@ export default defineComponent({
   height: 100%;
   text-transform: uppercase;
   padding: 0 1.5rem;
-  margin-top: 1.5rem;
+  margin-bottom: 4.1875rem;
   &__list-item {
-    padding: 1.5rem 0;
     border-bottom: 1px solid #393950;
+    &:last-of-type {
+      border-bottom: 0;
+    }
   }
   &__list-item-left {
     display: flex;
@@ -62,6 +64,7 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1.5rem 0;
   }
 }
 </style>
