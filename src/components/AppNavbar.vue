@@ -15,7 +15,7 @@
         @mouseover="(linkHover = true), (hoveredIndex = index)"
         @mouseleave="linkHover = false"
         :style="[
-          linkHover && hoveredIndex === index ? { borderTopColor: `${planet.color}` } : null,
+          linkHover && hoveredIndex === index ? { borderTopColor: `${planet.color}` } : null
         ]"
       >
         <router-link :to="planet.name" class="navbar__list-item-link">
@@ -23,31 +23,36 @@
         </router-link>
       </li>
     </ul>
-    <AppMobileNavbar class="navbar__mobile" :planets="planets" v-if="showMobileNav" />
+    <AppMobileNavbar
+      class="navbar__mobile"
+      :planets="planets"
+      v-if="showMobileNav"
+      @hideMobileNav="showMobileNav = false"
+    />
   </nav>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue';
-import AppLogo from '@/components/AppLogo.vue';
-import AppMobileNavbar from '@/components/AppMobileNavbar.vue';
+import { defineComponent, reactive, ref } from "vue";
+import AppLogo from "@/components/AppLogo.vue";
+import AppMobileNavbar from "@/components/AppMobileNavbar.vue";
 
 export default defineComponent({
-  name: 'AppNavbar',
+  name: "AppNavbar",
   components: {
     AppLogo,
-    AppMobileNavbar,
+    AppMobileNavbar
   },
   setup() {
     const planets = reactive([
-      { name: 'merkury', color: '#DEF4FC' },
-      { name: 'venus', color: '#F7CC7F' },
-      { name: 'earth', color: '#545BFE' },
-      { name: 'mars', color: '#FF6A45' },
-      { name: 'jupiter', color: '#ECAD7A' },
-      { name: 'saturn', color: '#FCCB6B' },
-      { name: 'uranus', color: '#65F0D5' },
-      { name: 'neptune', color: '#497EFA' },
+      { name: "mercury", color: "#DEF4FC" },
+      { name: "venus", color: "#F7CC7F" },
+      { name: "earth", color: "#545BFE" },
+      { name: "mars", color: "#FF6A45" },
+      { name: "jupiter", color: "#ECAD7A" },
+      { name: "saturn", color: "#FCCB6B" },
+      { name: "uranus", color: "#65F0D5" },
+      { name: "neptune", color: "#497EFA" }
     ]);
     const showMobileNav = ref<boolean>(false);
     const linkHover = ref<boolean>(false);
@@ -57,9 +62,9 @@ export default defineComponent({
       planets,
       showMobileNav,
       linkHover,
-      hoveredIndex,
+      hoveredIndex
     };
-  },
+  }
 });
 </script>
 
@@ -72,7 +77,7 @@ export default defineComponent({
   padding: 1.5rem;
   border-bottom: 1px solid #393950;
   &__list {
-    font-family: 'Spartan';
+    font-family: "Spartan";
     font-size: 0.6875rem;
     font-weight: 700;
     line-height: 1.5625rem;

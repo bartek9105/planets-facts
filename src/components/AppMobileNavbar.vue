@@ -1,7 +1,12 @@
 <template>
   <nav class="mobile-navbar">
     <ul class="mobile-navbar__list">
-      <li v-for="(planet, index) in planets" :key="index" class="mobile-navbar__list-item">
+      <li
+        v-for="(planet, index) in planets"
+        :key="index"
+        class="mobile-navbar__list-item"
+        @click="emitHideMobileNav"
+      >
         <router-link :to="planet.name" class="mobile-navbar__list-item-link">
           <div class="mobile-navbar__list-item-left">
             <div
@@ -18,22 +23,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'AppMobileNavbar',
+  name: "AppMobileNavbar",
   props: {
     planets: {
       required: true,
-      type: Array,
-    },
+      type: Array
+    }
   },
+  setup(_, { emit }) {
+    const emitHideMobileNav = () => emit("hideMobileNav");
+
+    return { emitHideMobileNav };
+  }
 });
 </script>
 
 <style lang="scss" scoped>
 .mobile-navbar {
-  font-family: 'Spartan';
+  font-family: "Spartan";
   font-weight: 700;
   font-size: 0.9375rem;
   line-height: 1.5625rem;
