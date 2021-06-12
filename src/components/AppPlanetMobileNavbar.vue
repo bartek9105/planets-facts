@@ -54,4 +54,9 @@ export default defineComponent({
     border-bottom: 4px solid transparent;
   }
 }
+@media (min-width: 768px) {
+  .planet-navbar {
+    display: none;
+  }
+}
 </style>

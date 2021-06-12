@@ -43,6 +43,7 @@ export default defineComponent({
   text-transform: uppercase;
   padding: 0 1.5rem;
   margin-bottom: 4.1875rem;
+  background-color: $black;
   &__list-item {
     border-bottom: 1px solid #393950;
     &:last-of-type {

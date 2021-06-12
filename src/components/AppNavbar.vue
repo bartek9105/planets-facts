@@ -99,8 +99,8 @@ export default defineComponent({
     cursor: pointer;
   }
   &__mobile {
-    position: absolute;
-    top: 6.3125rem;
+    position: fixed;
+    top: 4.8125rem;
     left: 0;
   }
 }
