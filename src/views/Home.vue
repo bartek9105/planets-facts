@@ -1,18 +1,48 @@
 <template>
   <div>
-    <AppPlanetMobileNavbar planetColor="#2D64F0" />
+    <AppPlanetMobileNavbar planetColor="#2D64F0" @selectedTab="tabName" />
     <article class="planet-info">
       <div class="planet-info__img-container">
-        <img :src="getImgUrl(planet.images.planet)" class="planet-info__img" />
+        <img
+          :src="getImgUrl(planet.images.planet)"
+          class="planet-info__img"
+          v-if="tab === 'overview'"
+        />
+        <img
+          :src="getImgUrl(planet.images.internal)"
+          class="planet-info__img"
+          v-if="tab === 'structure'"
+        />
+        <img
+          :src="getImgUrl(planet.images.geology)"
+          class="planet-info__img"
+          v-if="tab === 'surface'"
+        />
       </div>
       <section>
         <h2 class="planet-info__name">{{ planet.name }}</h2>
-        <p class="planet-info__overview">{{ planet.overview.content }}</p>
+        <p class="planet-info__overview" v-if="tab === 'overview'">
+          {{ planet.overview.content }}
+        </p>
+        <p class="planet-info__overview" v-if="tab === 'structure'">
+          {{ planet.structure.content }}
+        </p>
+        <p class="planet-info__overview" v-if="tab === 'surface'">
+          {{ planet.geology.content }}
+        </p>
       </section>
       <div class="planet-info__source">
         <span>Source: </span>
         <span>
-          <a :href="planet.overview.source" class="planet-info__link">Wikipedia</a>
+          <a :href="planet.overview.source" v-if="tab === 'overview'" class="planet-info__link"
+            >Wikipedia</a
+          >
+          <a :href="planet.structure.source" v-if="tab === 'structure'" class="planet-info__link"
+            >Wikipedia</a
+          >
+          <a :href="planet.geology.source" v-if="tab === 'surface'" class="planet-info__link"
+            >Wikipedia</a
+          >
           <img src="@/assets/icon-source.svg" alt="Wikipedia link" />
         </span>
       </div>
@@ -39,7 +69,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import AppPlanetMobileNavbar from "@/components/AppPlanetMobileNavbar.vue";
 import data from "@/assets/data.json";
 import { useRoute } from "vue-router";
@@ -52,6 +82,7 @@ export default defineComponent({
   setup() {
     const planets = data;
     const route = useRoute();
+    const tab = ref<string>("overview");
 
     const planet = computed(() =>
       planets.find(planetItem => planetItem.name.toLowerCase() === route.params.planet)
@@ -59,7 +90,11 @@ export default defineComponent({
 
     const getImgUrl = (img: string) => require("../assets/" + img);
 
-    return { planet, getImgUrl };
+    const tabName = (emitedTab: string) => {
+      tab.value = emitedTab;
+    };
+
+    return { planet, getImgUrl, tabName, tab };
   }
 });
 </script>

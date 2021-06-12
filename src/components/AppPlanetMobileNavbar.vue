@@ -2,11 +2,11 @@
   <nav class="planet-navbar">
     <ul class="planet-navbar__list">
       <li
-        class="planet-navbar__list-item"
-        @click="activeTab = index"
-        :style="[activeTab === index ? { borderBottomColor: planetColor, color: 'white' } : null]"
         v-for="(tab, index) in tabs"
+        :style="[activeTab === index ? { borderBottomColor: planetColor, color: 'white' } : null]"
+        @click="(activeTab = index), emitSelectedTab(tab)"
         :key="index"
+        class="planet-navbar__list-item"
       >
         {{ tab }}
       </li>
@@ -15,28 +15,32 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  name: 'AppPlanetMobileNavbar',
+  name: "AppPlanetMobileNavbar",
   props: {
     planetColor: {
       required: true,
-      type: String,
-    },
+      type: String
+    }
   },
-  setup() {
-    const tabs = ref<string[]>(['Overview', 'Structure', 'Surface']);
+  setup(_, { emit }) {
+    const tabs = ref<string[]>(["overview", "structure", "surface"]);
     const activeTab = ref<number>(0);
 
-    return { tabs, activeTab };
-  },
+    const emitSelectedTab = (tab: string) => {
+      emit("selectedTab", tab);
+    };
+
+    return { tabs, activeTab, emitSelectedTab };
+  }
 });
 </script>
 
 <style lang="scss" scoped>
 .planet-navbar {
-  font-family: 'Spartan';
+  font-family: "Spartan";
   font-size: 0.5625rem;
   font-weight: 700;
   letter-spacing: 0.120625rem;
