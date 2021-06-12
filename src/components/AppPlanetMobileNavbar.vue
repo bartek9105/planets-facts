@@ -3,7 +3,9 @@
     <ul class="planet-navbar__list">
       <li
         v-for="(tab, index) in tabs"
-        :style="[activeTab === index ? { borderBottomColor: planetColor, color: 'white' } : null]"
+        :style="[
+          activeTab === index ? { borderBottomColor: tabBorderColor, color: 'white' } : null
+        ]"
         @click="(activeTab = index), emitSelectedTab(tab)"
         :key="index"
         class="planet-navbar__list-item"
@@ -15,25 +17,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
+import planetsColors from "@/constants/planetsColors";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "AppPlanetMobileNavbar",
-  props: {
-    planetColor: {
-      required: true,
-      type: String
-    }
-  },
   setup(_, { emit }) {
     const tabs = ref<string[]>(["overview", "structure", "surface"]);
     const activeTab = ref<number>(0);
+    const route = useRoute();
 
     const emitSelectedTab = (tab: string) => {
       emit("selectedTab", tab);
     };
 
-    return { tabs, activeTab, emitSelectedTab };
+    const tabBorderColor = computed(
+      () => planetsColors.find(planet => planet.name.toLowerCase() === route.params.planet)?.color
+    );
+
+    return { tabs, activeTab, emitSelectedTab, tabBorderColor };
   }
 });
 </script>

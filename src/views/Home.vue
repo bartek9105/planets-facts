@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppPlanetMobileNavbar planetColor="#2D64F0" @selectedTab="tabName" />
+    <AppPlanetMobileNavbar @selectedTab="tabName" />
     <article class="planet-info">
       <div class="planet-info__img-container">
         <img

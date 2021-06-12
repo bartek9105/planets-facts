@@ -33,9 +33,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import AppLogo from "@/components/AppLogo.vue";
 import AppMobileNavbar from "@/components/AppMobileNavbar.vue";
+import planetsColors from "@/constants/planetsColors";
 
 export default defineComponent({
   name: "AppNavbar",
@@ -44,16 +45,7 @@ export default defineComponent({
     AppMobileNavbar
   },
   setup() {
-    const planets = reactive([
-      { name: "mercury", color: "#DEF4FC" },
-      { name: "venus", color: "#F7CC7F" },
-      { name: "earth", color: "#545BFE" },
-      { name: "mars", color: "#FF6A45" },
-      { name: "jupiter", color: "#ECAD7A" },
-      { name: "saturn", color: "#FCCB6B" },
-      { name: "uranus", color: "#65F0D5" },
-      { name: "neptune", color: "#497EFA" }
-    ]);
+    const planets = planetsColors;
     const showMobileNav = ref<boolean>(false);
     const linkHover = ref<boolean>(false);
     const hoveredIndex = ref<number>();
